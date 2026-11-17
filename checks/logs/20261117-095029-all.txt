@@ -1,0 +1,67 @@
+# check.py --stage all  @ 2026-11-17 09:50:29 (UTC+8)
+== stage fetch：來源是否真的抓到正文 ==
+  info  anthropic-building-effective-agents: 原本要求的網址 → 200 https://www.anthropic.com/research/building-effective-agents
+  ok    anthropic-building-effective-agents: HTTP 200，全文 2778 字，錨點句吻合
+  ok    weng-llm-powered-agents: HTTP 200，全文 6641 字，錨點句吻合
+  ok    yao-react: HTTP 200，全文 16784 字，錨點句吻合
+  ok    schick-toolformer: HTTP 200，全文 11138 字，錨點句吻合
+  ok    openai-practical-guide: HTTP 200，全文 4221 字，錨點句吻合
+  info  langgraph-workflows-agents: 原本要求的網址 → 200 https://langchain-ai.github.io/langgraph/tutorials/workflows/（轉址殘頁）
+  ok    langgraph-workflows-agents: HTTP 200，全文 4029 字，錨點句吻合
+
+== stage wiki：格式、連結、引文、數字 ==
+  ok    agent-definition: concept，0 句引文、9 個內部連結全部通過
+  ok    anthropic-building-effective-agents: source，4 句引文、6 個內部連結全部通過
+  ok    index: index，0 句引文、16 個內部連結全部通過
+  ok    langgraph-workflows-agents: source，3 句引文、4 個內部連結全部通過
+  ok    memory: concept，0 句引文、5 個內部連結全部通過
+  ok    multi-agent: concept，0 句引文、5 個內部連結全部通過
+  ok    openai-practical-guide: source，3 句引文、4 個內部連結全部通過
+  ok    planning: concept，0 句引文、6 個內部連結全部通過
+  ok    react-loop: concept，0 句引文、8 個內部連結全部通過
+  ok    risks: concept，0 句引文、7 個內部連結全部通過
+  ok    schick-toolformer: source，2 句引文、2 個內部連結全部通過
+  ok    tool-use: concept，0 句引文、8 個內部連結全部通過
+  ok    weng-llm-powered-agents: source，4 句引文、6 個內部連結全部通過
+  ok    workflow-patterns: concept，0 句引文、6 個內部連結全部通過
+  ok    yao-react: source，2 句引文、4 個內部連結全部通過
+
+== stage outline：簡報大綱的每一句都逐字出自 wiki ==
+  ok    大綱第 1 張「AI Agents 是什麼？」: 1 句都找得到
+  ok    大綱第 2 張「今天的路線」: 2 句都找得到
+  ok    大綱第 3 張「客服 vs 跑腿的助理」: 3 句都找得到
+  ok    大綱第 4 張「誰決定下一步？」: 4 句都找得到
+  ok    大綱第 5 張「一個 agent 由什麼組成？」: 2 句都找得到
+  ok    大綱第 6 張「工具：從房間伸出去的手」: 5 句都找得到
+  ok    大綱第 7 張「記憶與規劃」: 4 句都找得到
+  ok    大綱第 8 張「ReAct：想 → 做 → 看」: 4 句都找得到
+  ok    大綱第 9 張「為什麼有效？什麼時候停？」: 3 句都找得到
+  ok    大綱第 10 張「五種常見的工作流模式」: 5 句都找得到
+  ok    大綱第 11 張「多代理：先單、後多」: 3 句都找得到
+  ok    大綱第 12 張「把鑰匙交給新司機之前」: 4 句都找得到
+  ok    大綱第 13 張「五句話帶走今天的內容」: 4 句都找得到
+  ok    大綱第 14 張「小測驗」: 5 句都找得到
+  ok    大綱第 15 張「參考資料」: 1 句都找得到
+
+== stage slides：每張投影片都對得回 wiki ==
+  ok    共 15 張投影片（規定 12～15）
+  ok    第 1 張: 2 個關鍵詞 → index
+  ok    第 2 張: 6 個關鍵詞 → index
+  ok    第 3 張: 4 個關鍵詞 → agent-definition
+  ok    第 4 張: 4 個關鍵詞 → agent-definition, anthropic-building-effective-agents
+  ok    第 5 張: 6 個關鍵詞 → agent-definition, openai-practical-guide, weng-llm-powered-agents
+  ok    第 6 張: 5 個關鍵詞 → tool-use, openai-practical-guide, schick-toolformer
+  ok    第 7 張: 6 個關鍵詞 → memory, planning
+  ok    第 8 張: 4 個關鍵詞 → react-loop, yao-react
+  ok    第 9 張: 5 個關鍵詞 → react-loop, yao-react
+  ok    第 10 張: 5 個關鍵詞 → workflow-patterns, langgraph-workflows-agents
+  ok    第 11 張: 5 個關鍵詞 → multi-agent, openai-practical-guide
+  ok    第 12 張: 5 個關鍵詞 → risks, openai-practical-guide
+  ok    第 13 張: 5 個關鍵詞 → agent-definition, react-loop, multi-agent, risks
+  ok    第 14 張: 5 個關鍵詞 → agent-definition, react-loop, workflow-patterns, multi-agent, risks
+  ok    第 15 張: 6 個關鍵詞 → index
+
+== stage site：所有 HTML 的內部連結 ==
+  ok    檢查 295 個內部連結，全部存在
+
+結果：0 FAIL、0 WARN

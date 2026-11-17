@@ -309,9 +309,25 @@ def stage_site():
                     bad += 1; fail(f"{os.path.relpath(path, ROOT)} → {l} 不存在")
     if not bad: ok(f"檢查 {count} 個內部連結，全部存在")
 
+# ---------- stage: live ----------
+LIVE = "https://leonidas222069-dev.github.io/llm-wiki-ai-agents/"
+
+def stage_live():
+    say("== stage live：發布後的 GitHub Pages 每一頁都打得開 ==")
+    paths = ["", "index.html", "slides/index.html", "process.html"]
+    paths += ["wiki/" + fn for fn in sorted(os.listdir(WIKI)) if fn.endswith(".html")]
+    bad = 0
+    for p in paths:
+        status, final, body = fetch(LIVE + p)
+        if status == 200 and len(body) > 500:
+            ok(f"{status} {LIVE + p}")
+        else:
+            bad += 1; fail(f"{status} {LIVE + p}")
+    if not bad: ok(f"{len(paths)} 個網址全部 HTTP 200")
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--stage", default="all", choices=["fetch", "wiki", "outline", "slides", "site", "all"])
+    ap.add_argument("--stage", default="all", choices=["fetch", "wiki", "outline", "slides", "site", "live", "all"])
     ap.add_argument("--log", action="store_true")
     a = ap.parse_args()
     now = datetime.datetime.now()

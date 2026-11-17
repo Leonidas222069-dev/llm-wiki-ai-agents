@@ -1,0 +1,24 @@
+# check.py --stage live  @ 2026-11-17 09:50:31 (UTC+8)
+== stage live：發布後的 GitHub Pages 每一頁都打得開 ==
+  ok    200 https://leonidas222069-dev.github.io/llm-wiki-ai-agents/
+  ok    200 https://leonidas222069-dev.github.io/llm-wiki-ai-agents/index.html
+  ok    200 https://leonidas222069-dev.github.io/llm-wiki-ai-agents/slides/index.html
+  ok    200 https://leonidas222069-dev.github.io/llm-wiki-ai-agents/process.html
+  ok    200 https://leonidas222069-dev.github.io/llm-wiki-ai-agents/wiki/agent-definition.html
+  ok    200 https://leonidas222069-dev.github.io/llm-wiki-ai-agents/wiki/anthropic-building-effective-agents.html
+  ok    200 https://leonidas222069-dev.github.io/llm-wiki-ai-agents/wiki/index.html
+  ok    200 https://leonidas222069-dev.github.io/llm-wiki-ai-agents/wiki/langgraph-workflows-agents.html
+  ok    200 https://leonidas222069-dev.github.io/llm-wiki-ai-agents/wiki/memory.html
+  ok    200 https://leonidas222069-dev.github.io/llm-wiki-ai-agents/wiki/multi-agent.html
+  ok    200 https://leonidas222069-dev.github.io/llm-wiki-ai-agents/wiki/openai-practical-guide.html
+  ok    200 https://leonidas222069-dev.github.io/llm-wiki-ai-agents/wiki/planning.html
+  ok    200 https://leonidas222069-dev.github.io/llm-wiki-ai-agents/wiki/react-loop.html
+  ok    200 https://leonidas222069-dev.github.io/llm-wiki-ai-agents/wiki/risks.html
+  ok    200 https://leonidas222069-dev.github.io/llm-wiki-ai-agents/wiki/schick-toolformer.html
+  ok    200 https://leonidas222069-dev.github.io/llm-wiki-ai-agents/wiki/tool-use.html
+  ok    200 https://leonidas222069-dev.github.io/llm-wiki-ai-agents/wiki/weng-llm-powered-agents.html
+  ok    200 https://leonidas222069-dev.github.io/llm-wiki-ai-agents/wiki/workflow-patterns.html
+  ok    200 https://leonidas222069-dev.github.io/llm-wiki-ai-agents/wiki/yao-react.html
+  ok    19 個網址全部 HTTP 200
+
+結果：0 FAIL、0 WARN

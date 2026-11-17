@@ -69,8 +69,8 @@ flowchart TD
 | 09:46 | 檢查 slides #2 ＋ 人工複查 | 自動檢查 0 FAIL，但人工找到 2 個問題 | ① 第 4 張表格寫「彈性大」「遇到沒想過的情況就卡住」，關鍵詞檢查通過了，但 **wiki 裡沒有這兩個說法**。回到 Anthropic 原文，在 [Agent 定義](wiki/agent-definition.md) 補上 workflow 和 agent 各適合什麼（有原文根據），投影片改成照 wiki 寫；② 第 6 張的工具例子其實出自 OpenAI 指南頁，但 footer 沒標，已補上。→ **新增「整理重點」的 outline 檢查**，在產生 HTML 前就要求每句都逐字出自 wiki。 |
 | 09:47 | 檢查 outline #1、slides #3 | 0 FAIL | 這一輪的 outline 是在簡報做完之後才補寫的；從下一輪開始，順序就是先過 outline 檢查，再產生簡報（log：`20261117-094730-*.txt`） |
 | 09:48 | 檢查 site、all | 0 FAIL | 292 個內部連結全部存在（log：`20261117-094807-site.txt`、`20261117-094817-all.txt`） |
-
-發布後的最終檢查結果，附在第 6 節。
+| 09:49 | 發布＋截圖複查 | 人工找到 1 個問題 | 用 headless Chrome 截圖檢查手機版（寬 400px），發現投影片底部的出處 footer 被右下角的切換按鈕蓋住，而且「回首頁」按鈕壓到小標。改 CSS：手機版的 footer 移到按鈕上方、頂部多留空間、ReAct 三步驟改成直向排列。 |
+| 09:50 | 檢查 all、live | 0 FAIL | 發布後網站上 19 個網址全部 HTTP 200（log：`20261117-095029-all.txt`、`20261117-095031-live.txt`） |
 
 **問題統計：**
 
@@ -78,7 +78,7 @@ flowchart TD
 |---|---|---|
 | 取得資料／轉文字 | 4 | 轉址殘頁、網址轉址、PDF 欄位交錯、摘要頁和 PDF 版本不一致 |
 | 寫 Wiki | 1 | Toolformer 工具清單寫錯（根源是上一列的版本不一致） |
-| 產生簡報 | 3 | 自己加的「15 分鐘」、表格寫了 wiki 沒有的說法、footer 漏標出處 |
+| 產生簡報 | 3（＋1 版面問題） | 自己加的「15 分鐘」、表格寫了 wiki 沒有的說法、footer 漏標出處；另外手機版 footer 被按鈕蓋住 |
 | 檢查程式本身 | 3 | 標點空白、日期和狀態碼誤判、`<script>` 被算進投影片 |
 
 ## 5. 反思
@@ -99,4 +99,6 @@ flowchart TD
 
 ## 6. 發布後最終檢查
 
-（發布後補上）
+- `python3 checks/check.py --stage all`：fetch（6 份來源 HTTP 200、錨點句吻合）、wiki（15 頁）、outline（15 張）、slides（15 張）、site（內部連結）全部 0 FAIL。
+- `python3 checks/check.py --stage live`：GitHub Pages 上的首頁、簡報、流程頁和 15 個 wiki 頁，共 19 個網址全部 HTTP 200。
+- 仍標示「待確認」的地方：Anthropic 文章作者 Erik S. 的全名（頁面沒寫）、OpenAI 指南的精確發布日（只有 PDF metadata 的 2025-04-07）、LangGraph 文件的年份（文件頁沒有日期）。

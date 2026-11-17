@@ -159,9 +159,20 @@ flowchart TD
 <td>0 FAIL</td>
 <td>292 個內部連結全部存在（log：<code>20261117-094807-site.txt</code>、<code>20261117-094817-all.txt</code>）</td>
 </tr>
+<tr>
+<td>09:49</td>
+<td>發布＋截圖複查</td>
+<td>人工找到 1 個問題</td>
+<td>用 headless Chrome 截圖檢查手機版（寬 400px），發現投影片底部的出處 footer 被右下角的切換按鈕蓋住，而且「回首頁」按鈕壓到小標。改 CSS：手機版的 footer 移到按鈕上方、頂部多留空間、ReAct 三步驟改成直向排列。</td>
+</tr>
+<tr>
+<td>09:50</td>
+<td>檢查 all、live</td>
+<td>0 FAIL</td>
+<td>發布後網站上 19 個網址全部 HTTP 200（log：<code>20261117-095029-all.txt</code>、<code>20261117-095031-live.txt</code>）</td>
+</tr>
 </tbody>
 </table>
-<p>發布後的最終檢查結果，附在第 6 節。</p>
 <p><strong>問題統計：</strong></p>
 <table>
 <thead>
@@ -184,8 +195,8 @@ flowchart TD
 </tr>
 <tr>
 <td>產生簡報</td>
-<td>3</td>
-<td>自己加的「15 分鐘」、表格寫了 wiki 沒有的說法、footer 漏標出處</td>
+<td>3（＋1 版面問題）</td>
+<td>自己加的「15 分鐘」、表格寫了 wiki 沒有的說法、footer 漏標出處；另外手機版 footer 被按鈕蓋住</td>
 </tr>
 <tr>
 <td>檢查程式本身</td>
@@ -206,5 +217,9 @@ flowchart TD
 - <strong>fetch 檢查變嚴格</strong>：從「HTTP 200」變成「200＋不是轉址頁＋字數夠＋錨點句吻合」，因為這次證明了 200 不等於拿到正確內容。</p>
 <p>另外也學到，<strong>檢查程式本身也會出錯</strong>（3 次誤判）。誤判太多，人就會開始忽略 FAIL，所以每次 FAIL 都先判斷是內容錯還是檢查錯，再決定修哪一邊。關鍵詞檢查也有限制：它只能證明這個詞出現在 wiki，證明不了意思一樣，所以人工複查還是不能省。</p>
 <h2>6. 發布後最終檢查</h2>
-<p>（發布後補上）</p>
+<ul>
+<li><code>python3 checks/check.py --stage all</code>：fetch（6 份來源 HTTP 200、錨點句吻合）、wiki（15 頁）、outline（15 張）、slides（15 張）、site（內部連結）全部 0 FAIL。</li>
+<li><code>python3 checks/check.py --stage live</code>：GitHub Pages 上的首頁、簡報、流程頁和 15 個 wiki 頁，共 19 個網址全部 HTTP 200。</li>
+<li>仍標示「待確認」的地方：Anthropic 文章作者 Erik S. 的全名（頁面沒寫）、OpenAI 指南的精確發布日（只有 PDF metadata 的 2025-04-07）、LangGraph 文件的年份（文件頁沒有日期）。</li>
+</ul>
 </main><footer class="site">潘聖融（宜大 AI碩一）．內容依 <a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents/blob/main/AGENTS.md">AGENTS.md</a> 規則撰寫，由 build.py 從 Markdown 產生。</footer></body></html>
