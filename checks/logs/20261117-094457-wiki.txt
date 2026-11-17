@@ -1,0 +1,19 @@
+# check.py --stage wiki  @ 2026-11-17 09:44:57 (UTC+8)
+== stage wiki：格式、連結、引文、數字 ==
+  ok    agent-definition: concept，0 句引文、9 個內部連結全部通過
+  ok    anthropic-building-effective-agents: source，4 句引文、6 個內部連結全部通過
+  ok    index: index，0 句引文、16 個內部連結全部通過
+  ok    langgraph-workflows-agents: source，3 句引文、4 個內部連結全部通過
+  ok    memory: concept，0 句引文、5 個內部連結全部通過
+  ok    multi-agent: concept，0 句引文、5 個內部連結全部通過
+  ok    openai-practical-guide: source，3 句引文、4 個內部連結全部通過
+  ok    planning: concept，0 句引文、6 個內部連結全部通過
+  ok    react-loop: concept，0 句引文、8 個內部連結全部通過
+  ok    risks: concept，0 句引文、7 個內部連結全部通過
+  ok    schick-toolformer: source，2 句引文、2 個內部連結全部通過
+  ok    tool-use: concept，0 句引文、8 個內部連結全部通過
+  ok    weng-llm-powered-agents: source，4 句引文、6 個內部連結全部通過
+  ok    workflow-patterns: concept，0 句引文、6 個內部連結全部通過
+  ok    yao-react: source，2 句引文、4 個內部連結全部通過
+
+結果：0 FAIL、0 WARN

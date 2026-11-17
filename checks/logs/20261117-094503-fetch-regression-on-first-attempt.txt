@@ -1,0 +1,9 @@
+# check.py --stage fetch  @ 2026-11-17 09:45:03 (UTC+8)
+== stage fetch：來源是否真的抓到正文 ==
+  FAIL  schick-toolformer: 全文找不到錨點句（可能是 PDF 欄位交錯或抓錯版本）：We introduce Toolformer, a model trained to decide…
+  WARN  schick-toolformer: 還沒有 raw/schick-toolformer.md 摘錄
+  FAIL  langgraph-workflows-agents: HTTP 200 但內容是轉址殘頁（meta refresh）
+  ok    langgraph-workflows-agents: HTTP 200，全文 4029 字，錨點句吻合
+  WARN  langgraph-workflows-agents: 還沒有 raw/langgraph-workflows-agents.md 摘錄
+
+結果：2 FAIL、2 WARN

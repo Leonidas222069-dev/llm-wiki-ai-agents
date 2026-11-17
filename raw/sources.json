@@ -1,0 +1,84 @@
+{
+  "fetched_at": "2026-11-17 09:38 (UTC+8)",
+  "note": "全文只留在本機 raw/_full/（.gitignore 排除，避免把整篇受版權保護的文章放上公開 repo）；repo 只放 metadata 與短摘錄（raw/<id>.md）。 anchor 是從來源頁面摘要挑的一句話，fetch 檢查會確認全文裡逐字找得到，用來抓 PDF 欄位交錯或抓到錯的版本。",
+  "sources": [
+    {
+      "id": "anthropic-building-effective-agents",
+      "title": "Building effective agents",
+      "author": "Anthropic（頁尾署名 Erik S. 與 Barry Zhang；Erik 的全名頁面未寫出，待確認）",
+      "year": 2024,
+      "date": "2024-12-19（頁面 JSON-LD datePublished）",
+      "type": "部落格文章",
+      "requested_url": "https://www.anthropic.com/engineering/building-effective-agents",
+      "url": "https://www.anthropic.com/research/building-effective-agents",
+      "fetch": "HTTP 200，但被轉址：/engineering/ → /research/。wiki 一律記錄轉址後的正式網址。",
+      "full_text": "raw/_full/anthropic-building-effective-agents.txt",
+      "anchor": "They are typically just LLMs using tools based on environmental feedback in a loop."
+    },
+    {
+      "id": "weng-llm-powered-agents",
+      "title": "LLM Powered Autonomous Agents",
+      "author": "Lilian Weng",
+      "year": 2023,
+      "date": "2023-06（文末 Cited as: Jun 2023）",
+      "type": "部落格文章（Lil'Log）",
+      "requested_url": "https://lilianweng.github.io/posts/2023-06-23-agent/",
+      "url": "https://lilianweng.github.io/posts/2023-06-23-agent/",
+      "fetch": "HTTP 200，內容完整。注意：頁面標題是 \"LLM Powered Autonomous Agents\"，文末建議引用格式寫成 \"LLM-powered Autonomous Agents\"，以頁面標題為準。",
+      "full_text": "raw/_full/weng-llm-powered-agents.txt",
+      "anchor": "In a LLM-powered autonomous agent system, LLM functions as the agent's brain, complemented by several key components:"
+    },
+    {
+      "id": "yao-react",
+      "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+      "author": "Shunyu Yao, Jeffrey Zhao, Dian Yu, Nan Du, Izhak Shafran, Karthik Narasimhan, Yuan Cao",
+      "year": 2022,
+      "date": "arXiv v1 2022-10-06；v3 2023-03-10；發表於 ICLR 2023（PDF 首頁）",
+      "type": "論文（arXiv 2210.03629）",
+      "requested_url": "https://arxiv.org/abs/2210.03629",
+      "url": "https://arxiv.org/abs/2210.03629",
+      "fetch": "HTTP 200。作者與日期取自 arXiv 頁面 citation_* meta；全文取自 PDF（pdftotext）。 第一次用 pdftotext -layout 轉檔；Toolformer 因雙欄交錯出錯後，這篇也一併改用預設模式重新轉檔（這篇的引文兩種模式都比對得到）。",
+      "full_text": "raw/_full/yao-react.txt",
+      "anchor": "In this paper, we explore the use of LLMs to generate both reasoning traces and task-specific actions in an interleaved manner"
+    },
+    {
+      "id": "schick-toolformer",
+      "title": "Toolformer: Language Models Can Teach Themselves to Use Tools",
+      "author": "Timo Schick, Jane Dwivedi-Yu, Roberto Dessì, Roberta Raileanu, Maria Lomeli, Luke Zettlemoyer, Nicola Cancedda, Thomas Scialom",
+      "year": 2023,
+      "date": "arXiv v1 2023-02-09",
+      "type": "論文（arXiv 2302.04761）",
+      "requested_url": "https://arxiv.org/abs/2302.04761",
+      "url": "https://arxiv.org/abs/2302.04761",
+      "fetch": "HTTP 200。作者與日期取自 arXiv citation_* meta；全文取自 PDF（pdftotext）。 第一次用 pdftotext -layout 轉檔，雙欄排版造成摘要和圖說交錯，引文比對失敗；改用預設模式（依閱讀順序）重新轉檔。 另外發現 arXiv 摘要頁寫 \"two different search engines\"，PDF（v1）摘要寫 \"a search engine\"，正文列出五種工具（含一個 Wikipedia 搜尋引擎）；wiki 以 PDF 為準。",
+      "full_text": "raw/_full/schick-toolformer.txt",
+      "anchor": "We introduce Toolformer, a model trained to decide which APIs to call, when to call them, what arguments to pass, and how to best incorporate the results into future token prediction."
+    },
+    {
+      "id": "openai-practical-guide",
+      "title": "A practical guide to building agents",
+      "author": "OpenAI",
+      "year": 2025,
+      "date": "PDF 內文沒有寫日期；PDF metadata CreationDate 為 2025-04-07，年份以此為準（精確發布日待確認）",
+      "type": "PDF 指南（34 頁）",
+      "requested_url": "https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf",
+      "url": "https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf",
+      "fetch": "HTTP 200，7.3 MB PDF，pdftotext 轉文字。程式碼區塊轉出來會斷行，只引用說明文字。",
+      "full_text": "raw/_full/openai-practical-guide.txt",
+      "anchor": "Agents are systems that independently accomplish tasks on your behalf."
+    },
+    {
+      "id": "langgraph-workflows-agents",
+      "title": "Workflows and agents（LangGraph 官方文件）",
+      "author": "LangChain",
+      "year": null,
+      "date": "文件頁沒有日期，以擷取日 2026-11-17 為準",
+      "type": "官方文件",
+      "requested_url": "https://langchain-ai.github.io/langgraph/tutorials/workflows/",
+      "url": "https://docs.langchain.com/oss/python/langgraph/workflows-agents",
+      "fetch": "第一次抓舊網址：HTTP 200 但內容只有 570 bytes 的 meta-refresh 轉址頁（證據：raw/evidence/langgraph-old-url-stub.html）。改抓新網址的 .md 版本才拿到正文。這是本次第一個被抓到的錯誤，促成「取得資料」節點加上內容檢查。",
+      "full_text": "raw/_full/langgraph-workflows-agents.md",
+      "anchor": "Workflows have predetermined code paths and are designed to operate in a certain order."
+    }
+  ]
+}

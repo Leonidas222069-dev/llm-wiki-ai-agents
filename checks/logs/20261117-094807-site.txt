@@ -1,0 +1,5 @@
+# check.py --stage site  @ 2026-11-17 09:48:07 (UTC+8)
+== stage site：所有 HTML 的內部連結 ==
+  ok    檢查 292 個內部連結，全部存在
+
+結果：0 FAIL、0 WARN

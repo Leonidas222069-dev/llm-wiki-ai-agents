@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>來源｜LangGraph 文件〈Workflows and agents〉｜AI Agents LLM Wiki</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><nav class="top"><a class="brand" href="../index.html">AI Agents LLM Wiki</a><a href="../wiki/index.html">Wiki</a><a href="../slides/index.html">教學簡報</a><a href="../process.html">流程與檢查紀錄</a><a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents">GitHub</a></nav><main>
+<h1>來源｜LangGraph 文件〈Workflows and agents〉</h1><div class="meta"><span class="tag">來源摘要頁</span>更新：2026-11-17<br>相關頁：<a href="workflow-patterns.html">工作流模式</a>、<a href="agent-definition.html">Agent 定義</a>、<a href="react-loop.html">ReAct 迴圈</a><br><a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents/blob/main/wiki/langgraph-workflows-agents.md">看 Markdown 原檔</a></div>
+<h2>基本資料</h2>
+<ul>
+<li>標題：Workflows and agents（LangGraph 官方文件）</li>
+<li>作者：LangChain</li>
+<li>年份：文件頁沒有日期，以擷取日 2026-11-17 為準（待確認）</li>
+<li>類型：官方文件</li>
+<li>正式網址：https://docs.langchain.com/oss/python/langgraph/workflows-agents</li>
+<li>抓取備註：舊網址 langchain-ai.github.io/langgraph/tutorials/workflows/ 回 HTTP 200，但內容只是轉址殘頁，見 <a href="../process.html">流程說明</a>。</li>
+</ul>
+<h2>一句話摘要</h2>
+<p>LangGraph 官方把常見的 workflow 和 agent 模式，各用一張「graph（節點＋邊）」實作出來：prompt chaining、parallelization、routing、orchestrator-worker、evaluator-optimizer，以及用工具的 agent 迴圈。</p>
+<h2>重點整理</h2>
+<ol>
+<li><strong>分類跟 Anthropic 一樣</strong>：workflow 的程式路徑是事先決定好的；agent 會動態決定自己的流程和工具。</li>
+<li><strong>增強型 LLM</strong>：tool calling、structured output、short term memory 是常見的增強方式。</li>
+<li><strong>每個模式都是一張圖</strong>：用 StateGraph 定義 state、節點（node）、邊（edge），compile 後執行。</li>
+<li><strong>Orchestrator-worker</strong>：用 <code>Send</code> API 動態產生 worker 節點，每個 worker 有自己的 state，結果寫回共享的 state 讓 orchestrator 彙整。</li>
+<li><strong>Evaluator-optimizer</strong>：一個 LLM 產生、另一個評估；不合格就帶著回饋重做，直到可以接受為止，也可以由人（human-in-the-loop）來評估。</li>
+<li><strong>Agent</strong>：LLM 透過工具行動，在持續的回饋迴圈裡運作，適合問題和解法都難以預測的情境；開發者仍然可以限定可用工具和行為準則。</li>
+</ol>
+<h2>原文摘錄</h2>
+<blockquote>
+<p>"Workflows have predetermined code paths and are designed to operate in a certain order."
+"Agents are dynamic and define their own processes and tool usage."
+"This loop continues until an acceptable response is generated."</p>
+</blockquote>
+<h2>跟其他頁的關係</h2>
+<ul>
+<li>五種模式的比較表在 <a href="workflow-patterns.html">工作流模式</a>。</li>
+<li>workflow／agent 的分界在 <a href="agent-definition.html">Agent 定義</a>。</li>
+<li>工具迴圈跟 <a href="react-loop.html">ReAct 迴圈</a> 是同一個想法。</li>
+</ul>
+</main><footer class="site">潘聖融（宜大 AI碩一）．內容依 <a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents/blob/main/AGENTS.md">AGENTS.md</a> 規則撰寫，由 build.py 從 Markdown 產生。</footer></body></html>

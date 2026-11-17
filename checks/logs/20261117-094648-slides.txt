@@ -1,0 +1,20 @@
+# check.py --stage slides  @ 2026-11-17 09:46:48 (UTC+8)
+== stage slides：每張投影片都對得回 wiki ==
+  ok    共 15 張投影片（規定 12～15）
+  ok    第 1 張: 2 個關鍵詞 → index
+  ok    第 2 張: 6 個關鍵詞 → index
+  ok    第 3 張: 4 個關鍵詞 → agent-definition
+  ok    第 4 張: 4 個關鍵詞 → agent-definition, anthropic-building-effective-agents
+  ok    第 5 張: 6 個關鍵詞 → agent-definition, openai-practical-guide, weng-llm-powered-agents
+  ok    第 6 張: 5 個關鍵詞 → tool-use, schick-toolformer
+  ok    第 7 張: 6 個關鍵詞 → memory, planning
+  ok    第 8 張: 4 個關鍵詞 → react-loop, yao-react
+  ok    第 9 張: 5 個關鍵詞 → react-loop, yao-react
+  ok    第 10 張: 5 個關鍵詞 → workflow-patterns, langgraph-workflows-agents
+  ok    第 11 張: 5 個關鍵詞 → multi-agent, openai-practical-guide
+  ok    第 12 張: 5 個關鍵詞 → risks, openai-practical-guide
+  ok    第 13 張: 5 個關鍵詞 → agent-definition, react-loop, multi-agent, risks
+  ok    第 14 張: 5 個關鍵詞 → agent-definition, react-loop, workflow-patterns, multi-agent, risks
+  ok    第 15 張: 6 個關鍵詞 → index
+
+結果：0 FAIL、0 WARN

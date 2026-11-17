@@ -1,0 +1,22 @@
+# check.py --stage wiki  @ 2026-11-17 09:44:11 (UTC+8)
+== stage wiki：格式、連結、引文、數字 ==
+  ok    agent-definition: concept，0 句引文、9 個內部連結全部通過
+  FAIL  anthropic-building-effective-agents: 引文在全文找不到：「Agents, on the other hand, are systems where LLMs dynamicall…」
+  FAIL  anthropic-building-effective-agents: 數字 12 在引用來源的全文裡找不到
+  FAIL  anthropic-building-effective-agents: 數字 19 在引用來源的全文裡找不到
+  ok    index: index，0 句引文、16 個內部連結全部通過
+  FAIL  langgraph-workflows-agents: 數字 200 在引用來源的全文裡找不到
+  ok    memory: concept，0 句引文、5 個內部連結全部通過
+  ok    multi-agent: concept，0 句引文、5 個內部連結全部通過
+  ok    openai-practical-guide: source，3 句引文、4 個內部連結全部通過
+  ok    planning: concept，0 句引文、6 個內部連結全部通過
+  ok    react-loop: concept，0 句引文、8 個內部連結全部通過
+  ok    risks: concept，0 句引文、7 個內部連結全部通過
+  FAIL  schick-toolformer: 引文在全文找不到：「We introduce Toolformer, a model trained to decide which API…」
+  FAIL  schick-toolformer: 引文在全文找不到：「We incorporate a range of tools, including a calculator, a Q…」
+  ok    tool-use: concept，0 句引文、8 個內部連結全部通過
+  ok    weng-llm-powered-agents: source，4 句引文、6 個內部連結全部通過
+  ok    workflow-patterns: concept，0 句引文、6 個內部連結全部通過
+  ok    yao-react: source，2 句引文、4 個內部連結全部通過
+
+結果：6 FAIL、0 WARN

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>工具使用｜AI Agents LLM Wiki</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><nav class="top"><a class="brand" href="../index.html">AI Agents LLM Wiki</a><a href="../wiki/index.html">Wiki</a><a href="../slides/index.html">教學簡報</a><a href="../process.html">流程與檢查紀錄</a><a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents">GitHub</a></nav><main>
+<h1>工具使用</h1><div class="meta"><span class="tag">概念頁</span>更新：2026-11-17<br>來源：<a href="openai-practical-guide.html">A practical guide to building agents</a>、<a href="schick-toolformer.html">Toolformer: Language Models Can Teach Themselves to Use Tools</a>、<a href="weng-llm-powered-agents.html">LLM Powered Autonomous Agents</a>、<a href="anthropic-building-effective-agents.html">Building effective agents</a><br>相關頁：<a href="agent-definition.html">Agent 定義</a>、<a href="react-loop.html">ReAct 迴圈</a>、<a href="multi-agent.html">多代理</a>、<a href="risks.html">風險與陷阱</a><br><a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents/blob/main/wiki/tool-use.md">看 Markdown 原檔</a></div>
+<h2>白話說</h2>
+<p>LLM 就像一個讀過很多書、但被關在房間裡的人：它知道很多，卻不知道今天的新聞，心算也可能出錯。<strong>工具（tool）就是從房間伸出去的手</strong>：查網路、算數學、讀資料庫、寄信。Agent 會判斷「現在需要哪隻手」，呼叫工具、拿回結果，再決定下一步。</p>
+<h2>重點</h2>
+<ul>
+<li><strong>為什麼需要工具</strong>：補上模型權重裡沒有的東西，例如最新資訊、程式執行、私有資料。</li>
+<li><strong>工具三類</strong>：Data（取得資訊）、Action（採取行動）、Orchestration（把別的 agent 當工具）。</li>
+<li><strong>模型怎麼學會用工具</strong>：Toolformer 用自我監督的方式，讓模型自己插入 API 呼叫、執行、只保留有幫助的，再微調；論文用了五種工具：問答系統、Wikipedia 搜尋、計算機、日曆、機器翻譯。</li>
+<li><strong>工具說明要寫清楚</strong>：Anthropic 叫它 agent-computer interface（ACI），要像寫給新同事的說明文件一樣，附範例、邊界情況、輸入格式。</li>
+<li><strong>工具多了要注意</strong>：問題不只是數量，而是工具彼此太像。分不清時考慮拆成 <a href="multi-agent.html">多代理</a>。</li>
+</ul>
+<h2>各來源怎麼說</h2>
+<ul>
+<li>OpenAI：工具分 Data、Action、Orchestration 三類；每個工具要有標準化定義、文件完整、測試過（<a href="openai-practical-guide.html">OpenAI 指南</a>）。</li>
+<li>Toolformer：模型可以只靠每個工具少量示範，自己學會什麼時候呼叫哪個 API（<a href="schick-toolformer.html">Toolformer</a>）。</li>
+<li>Weng：MRKL、TALM、Toolformer 都是讓 LLM 使用外部工具的方法（<a href="weng-llm-powered-agents.html">Weng</a>）。</li>
+<li>Anthropic：建議花在工具設計上的心力要跟寫 prompt 一樣多（<a href="anthropic-building-effective-agents.html">Anthropic</a>）。</li>
+</ul>
+<h2>常見誤會</h2>
+<ul>
+<li>「模型會自己知道工具怎麼用」：不一定，工具名稱、參數、說明寫不清楚，模型就容易用錯。</li>
+<li>「工具越多越強」：工具重疊會讓模型選錯，見 <a href="risks.html">風險與陷阱</a>。</li>
+</ul>
+<h2>延伸閱讀</h2>
+<ul>
+<li><a href="react-loop.html">ReAct 迴圈</a>：工具呼叫怎麼嵌進「想→做→看」的循環。</li>
+<li><a href="agent-definition.html">Agent 定義</a></li>
+</ul>
+</main><footer class="site">潘聖融（宜大 AI碩一）．內容依 <a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents/blob/main/AGENTS.md">AGENTS.md</a> 規則撰寫，由 build.py 從 Markdown 產生。</footer></body></html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>多代理｜AI Agents LLM Wiki</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><nav class="top"><a class="brand" href="../index.html">AI Agents LLM Wiki</a><a href="../wiki/index.html">Wiki</a><a href="../slides/index.html">教學簡報</a><a href="../process.html">流程與檢查紀錄</a><a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents">GitHub</a></nav><main>
+<h1>多代理</h1><div class="meta"><span class="tag">概念頁</span>更新：2026-11-17<br>來源：<a href="openai-practical-guide.html">A practical guide to building agents</a>、<a href="anthropic-building-effective-agents.html">Building effective agents</a><br>相關頁：<a href="workflow-patterns.html">工作流模式</a>、<a href="tool-use.html">工具使用</a>、<a href="agent-definition.html">Agent 定義</a><br><a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents/blob/main/wiki/multi-agent.md">看 Markdown 原檔</a></div>
+<h2>白話說</h2>
+<p>一個人包辦所有事情會手忙腳亂，所以公司會分部門。多代理（multi-agent）就是<strong>把工作分給好幾個各有專長的 agent</strong>。但分部門也有成本：溝通變多、出錯更難追。所以建議<strong>先把一個 agent 做到極致，真的撐不住再拆</strong>。</p>
+<h2>重點</h2>
+<ul>
+<li><strong>先單、後多</strong>：單一 agent 靠逐步加工具就能處理很多任務，也比較好評估和維護。</li>
+<li><strong>什麼時候該拆</strong>：</li>
+<li>提示裡的條件分支（if-else）多到難以維護；</li>
+<li>工具彼此太像、模型一直選錯（有些系統能管好超過 15 個清楚的工具，有些在不到 10 個重疊工具時就出問題）。</li>
+<li><strong>兩種常見模式</strong>：</li>
+<li>Manager（管理者）：一個中央 agent 把其他專門 agent 當成工具呼叫，由它統一跟使用者互動。例子：翻譯請求交給西班牙文、法文、義大利文 agent。</li>
+<li>Decentralized（去中心化）：agent 之間平起平坐，用 handoff 把控制權交給另一個 agent。例子：分流 agent 把訂單問題交給訂單管理 agent。</li>
+<li><strong>用圖來想</strong>：多代理系統可以看成一張圖，agent 是節點；manager 模式的邊是工具呼叫，decentralized 模式的邊是 handoff。</li>
+</ul>
+<h2>各來源怎麼說</h2>
+<ul>
+<li>OpenAI：建議先最大化單一 agent 的能力；多代理分 manager 和 decentralized 兩類，並給出拆分的實務準則（<a href="openai-practical-guide.html">OpenAI 指南</a>）。</li>
+<li>Anthropic：orchestrator-workers 是由中央 LLM 動態分派任務給 worker LLM，概念上很接近 manager 模式（<a href="anthropic-building-effective-agents.html">Anthropic</a>）。</li>
+</ul>
+<h2>常見誤會</h2>
+<ul>
+<li>「agent 越多越聰明」：多代理會增加複雜度和額外負擔，常常一個 agent 加工具就夠了。</li>
+<li>「多代理一定要畫完整的圖」：OpenAI 提到宣告式的圖在流程變複雜時會很笨重，它的 SDK 採 code-first 的方式。</li>
+</ul>
+<h2>延伸閱讀</h2>
+<ul>
+<li><a href="workflow-patterns.html">工作流模式</a>：orchestrator-workers。</li>
+<li><a href="tool-use.html">工具使用</a>：agent 也能當工具。</li>
+<li><a href="agent-definition.html">Agent 定義</a></li>
+</ul>
+</main><footer class="site">潘聖融（宜大 AI碩一）．內容依 <a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents/blob/main/AGENTS.md">AGENTS.md</a> 規則撰寫，由 build.py 從 Markdown 產生。</footer></body></html>

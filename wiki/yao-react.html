@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>來源｜ReAct（Yao et al., 2022）｜AI Agents LLM Wiki</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><nav class="top"><a class="brand" href="../index.html">AI Agents LLM Wiki</a><a href="../wiki/index.html">Wiki</a><a href="../slides/index.html">教學簡報</a><a href="../process.html">流程與檢查紀錄</a><a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents">GitHub</a></nav><main>
+<h1>來源｜ReAct（Yao et al., 2022）</h1><div class="meta"><span class="tag">來源摘要頁</span>更新：2026-11-17<br>相關頁：<a href="react-loop.html">ReAct 迴圈</a>、<a href="planning.html">規劃</a>、<a href="tool-use.html">工具使用</a><br><a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents/blob/main/wiki/yao-react.md">看 Markdown 原檔</a></div>
+<h2>基本資料</h2>
+<ul>
+<li>標題：ReAct: Synergizing Reasoning and Acting in Language Models</li>
+<li>作者：Shunyu Yao, Jeffrey Zhao, Dian Yu, Nan Du, Izhak Shafran, Karthik Narasimhan, Yuan Cao</li>
+<li>年份：2022（arXiv 2210.03629 第一版 2022-10-06；ICLR 2023 發表）</li>
+<li>類型：論文</li>
+<li>正式網址：https://arxiv.org/abs/2210.03629</li>
+</ul>
+<h2>一句話摘要</h2>
+<p>讓 LLM <strong>交錯產生「推理」（Thought）和「行動」（Action）</strong>：想一下 → 做一個動作（例如查 Wikipedia）→ 看結果 → 再想，比只推理或只行動都好。</p>
+<h2>重點整理</h2>
+<ol>
+<li><strong>問題</strong>：以前「推理」（例如 chain-of-thought）和「行動」（例如產生行動計畫）是分開研究的。</li>
+<li><strong>做法</strong>：讓模型交錯輸出推理軌跡和具體行動。推理幫助模型擬定、追蹤、更新計畫；行動讓模型能和外部（知識庫、環境）互動、拿到新資訊。</li>
+<li><strong>好處一：比較不會亂編</strong>。在 HotpotQA（問答）和 Fever（事實查核）上，透過一個簡單的 Wikipedia API 查資料，減少 chain-of-thought 常見的幻覺（hallucination）和錯誤傳遞。</li>
+<li><strong>好處二：比較好懂</strong>。產生的解題軌跡像人類一樣，比較容易解讀、也比較值得信任。</li>
+<li><strong>決策任務</strong>：在 ALFWorld 和 WebShop 兩個互動式任務上，只用一兩個範例提示，成功率分別比模仿學習和強化學習方法高出 34% 和 10%（絕對值）。</li>
+</ol>
+<h2>原文摘錄</h2>
+<blockquote>
+<p>"In this paper, we explore the use of LLMs to generate both reasoning traces and task-specific actions in an interleaved manner, allowing for greater synergy between the two"
+"an absolute success rate of 34% and 10% respectively"</p>
+</blockquote>
+<h2>跟其他頁的關係</h2>
+<ul>
+<li>迴圈怎麼運作，用白話整理在 <a href="react-loop.html">ReAct 迴圈</a>。</li>
+<li>Weng 在 <a href="weng-llm-powered-agents.html">她的文章</a> 裡把 ReAct 歸在「自我反思」，放進 <a href="planning.html">規劃</a>。</li>
+<li>ReAct 的 Action 就是一種 <a href="tool-use.html">工具使用</a>。</li>
+</ul>
+</main><footer class="site">潘聖融（宜大 AI碩一）．內容依 <a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents/blob/main/AGENTS.md">AGENTS.md</a> 規則撰寫，由 build.py 從 Markdown 產生。</footer></body></html>

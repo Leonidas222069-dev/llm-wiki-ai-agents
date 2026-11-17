@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>來源｜Anthropic〈Building effective agents〉｜AI Agents LLM Wiki</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><nav class="top"><a class="brand" href="../index.html">AI Agents LLM Wiki</a><a href="../wiki/index.html">Wiki</a><a href="../slides/index.html">教學簡報</a><a href="../process.html">流程與檢查紀錄</a><a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents">GitHub</a></nav><main>
+<h1>來源｜Anthropic〈Building effective agents〉</h1><div class="meta"><span class="tag">來源摘要頁</span>更新：2026-11-17<br>相關頁：<a href="workflow-patterns.html">工作流模式</a>、<a href="agent-definition.html">Agent 定義</a>、<a href="risks.html">風險與陷阱</a>、<a href="tool-use.html">工具使用</a><br><a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents/blob/main/wiki/anthropic-building-effective-agents.md">看 Markdown 原檔</a></div>
+<h2>基本資料</h2>
+<ul>
+<li>標題：Building effective agents</li>
+<li>作者：Anthropic（頁尾署名 Erik S. 與 Barry Zhang，Erik 的全名頁面沒寫，待確認）</li>
+<li>年份：2024（頁面標示 2024-12-19）</li>
+<li>類型：部落格文章</li>
+<li>正式網址：https://www.anthropic.com/research/building-effective-agents</li>
+<li>抓取備註：原本的 /engineering/ 網址會被轉到 /research/，這裡記轉址後的網址。</li>
+</ul>
+<h2>一句話摘要</h2>
+<p>Anthropic 根據跟客戶合作的經驗，把「agentic 系統」分成 <strong>workflow（流程寫死）</strong> 和 <strong>agent（模型自己決定步驟）</strong> 兩種，並整理出五種常見 workflow 模式，核心建議是：能簡單就簡單，真的需要才加複雜度。</p>
+<h2>重點整理</h2>
+<ol>
+<li><strong>Workflow vs Agent</strong>：workflow 是用預先寫好的程式路徑串起 LLM 和工具；agent 則是 LLM 自己決定流程和要用哪些工具。</li>
+<li><strong>基本積木是「增強型 LLM」（augmented LLM）</strong>：LLM 加上檢索、工具、記憶。</li>
+<li><strong>五種 workflow 模式</strong>：Prompt chaining（串接）、Routing（分流）、Parallelization（平行，含 sectioning 和 voting）、Orchestrator-workers（指揮者與工人）、Evaluator-optimizer（評估者與優化者）。詳見 <a href="workflow-patterns.html">工作流模式</a>。</li>
+<li><strong>Agent 的本質很單純</strong>：就是 LLM 在迴圈裡，根據環境回饋來用工具。每一步都要從環境拿到「ground truth」（例如工具結果、程式執行結果）來判斷進度。</li>
+<li><strong>要設停止條件</strong>：例如最多跑幾輪，避免失控。</li>
+<li><strong>風險</strong>：自主性帶來更高成本和錯誤累積（compounding errors），建議在沙盒裡大量測試並加上 guardrails。</li>
+<li><strong>三個原則</strong>：保持簡單、讓規劃步驟透明、好好設計 agent-computer interface（ACI，也就是工具的說明和測試）。</li>
+</ol>
+<h2>原文摘錄</h2>
+<blockquote>
+<p>"Workflows are systems where LLMs and tools are orchestrated through predefined code paths."
+"Agents, on the other hand, are systems where LLMs dynamically direct their own processes and tool usage, maintaining control over how they accomplish tasks."
+"They are typically just LLMs using tools based on environmental feedback in a loop."
+"The autonomous nature of agents means higher costs, and the potential for compounding errors."</p>
+</blockquote>
+<h2>跟其他頁的關係</h2>
+<ul>
+<li>「workflow vs agent」的分法是 <a href="agent-definition.html">Agent 定義</a> 的主軸，<a href="langgraph-workflows-agents.html">LangGraph 文件</a> 也沿用同一套分類。</li>
+<li>五種模式整理在 <a href="workflow-patterns.html">工作流模式</a>。</li>
+<li>成本、錯誤累積、停止條件放在 <a href="risks.html">風險與陷阱</a>。</li>
+<li>ACI 與工具設計放在 <a href="tool-use.html">工具使用</a>。</li>
+</ul>
+</main><footer class="site">潘聖融（宜大 AI碩一）．內容依 <a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents/blob/main/AGENTS.md">AGENTS.md</a> 規則撰寫，由 build.py 從 Markdown 產生。</footer></body></html>

@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Agents 是什麼？｜教學簡報</title>
+<meta name="description" content="用 LLM Wiki 產生的 AI Agents 入門教學簡報">
+<style>
+:root{--bg:#f6f1e7;--ink:#1f2a24;--muted:#5b675f;--accent:#2f5d50;--accent2:#c8742b;--card:#fffdf8;--line:#ddd3c2}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#20302a;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;color:var(--ink)}
+.deck{position:relative;width:100%;height:100%;overflow:hidden}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;padding:clamp(20px,5vw,64px) clamp(20px,7vw,96px) 72px;background:var(--bg);overflow-y:auto}
+.slide.active{display:flex;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.kicker{font-size:clamp(13px,1.6vw,16px);letter-spacing:.12em;color:var(--accent2);font-weight:700;margin:0 0 6px}
+h1{font-family:"Noto Serif TC",serif;font-size:clamp(34px,6vw,72px);margin:0 0 16px;line-height:1.15}
+h2{font-family:"Noto Serif TC",serif;font-size:clamp(26px,3.8vw,44px);margin:0 0 18px;color:var(--accent);line-height:1.25}
+p,li,td,th,summary{font-size:clamp(16px,2vw,22px);line-height:1.65}
+ul{margin:0;padding-left:1.2em}
+li{margin:.35em 0}
+.lead{font-size:clamp(18px,2.4vw,26px);color:var(--muted)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2vw,28px)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,1.6vw,22px)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:clamp(14px,2vw,24px);box-shadow:0 2px 0 rgba(0,0,0,.04)}
+.card h3{margin:0 0 8px;font-size:clamp(18px,2.2vw,26px);color:var(--accent)}
+.card p{margin:0;font-size:clamp(15px,1.8vw,20px)}
+.tag{display:inline-block;background:var(--accent);color:#fff;border-radius:999px;padding:2px 12px;font-size:.8em;margin-right:6px}
+.note{background:#fbeedd;border-left:5px solid var(--accent2);padding:10px 16px;border-radius:8px;margin-top:16px}
+table{border-collapse:collapse;width:100%;background:var(--card);border-radius:12px;overflow:hidden}
+th,td{border-bottom:1px solid var(--line);padding:10px 14px;text-align:left;vertical-align:top}
+th{background:#e9e0cf}
+.loop{display:flex;align-items:center;justify-content:center;gap:clamp(6px,1.5vw,18px);flex-wrap:wrap;margin:18px 0}
+.step{background:var(--accent);color:#fff;border-radius:16px;padding:14px 22px;text-align:center;min-width:150px}
+.step b{display:block;font-size:clamp(20px,2.6vw,30px)}
+.step span{font-size:clamp(14px,1.7vw,18px);opacity:.9}
+.arrow{font-size:32px;color:var(--accent2)}
+.back{text-align:center;color:var(--muted);font-size:clamp(14px,1.6vw,18px)}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 16px;margin:8px 0}
+summary{cursor:pointer;font-weight:600}
+details p{margin:8px 0 0;color:var(--accent)}
+.title-slide{justify-content:center;background:radial-gradient(circle at 80% 20%,#e7dcc6 0,var(--bg) 55%)}
+.title-slide .meta{color:var(--muted);margin-top:24px}
+.cite{position:absolute;left:0;right:0;bottom:0;padding:10px clamp(20px,7vw,96px);font-size:14px;color:var(--muted);background:linear-gradient(transparent,var(--bg) 35%);}
+.cite a{color:var(--accent);margin-right:10px}
+.bar{position:fixed;left:0;top:0;height:5px;background:var(--accent2);transition:width .3s;z-index:5}
+.hud{position:fixed;right:14px;bottom:12px;display:flex;align-items:center;gap:8px;z-index:6}
+.hud button{border:0;background:var(--accent);color:#fff;width:40px;height:40px;border-radius:50%;font-size:18px;cursor:pointer}
+.hud button:disabled{opacity:.35;cursor:default}
+.count{font-size:14px;color:var(--muted);min-width:52px;text-align:center;background:var(--card);border-radius:999px;padding:4px 8px}
+.home{position:fixed;left:14px;top:14px;z-index:6;font-size:13px;color:var(--muted);text-decoration:none;background:var(--card);padding:4px 10px;border-radius:999px;opacity:.85}
+@media (max-width:760px){.grid2,.grid3{grid-template-columns:1fr}.slide{padding-bottom:110px}.cite{font-size:12px;padding-right:150px}}
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+<a class="home" href="../index.html">← 回首頁</a>
+<main class="deck" id="deck">
+
+<section class="slide title-slide" data-terms="AI Agents|LLM Wiki">
+  <p class="kicker">生成式 AI 課堂．入門教學</p>
+  <h1>AI Agents 是什麼？</h1>
+  <p class="lead">從「會聊天」到「會做事」：一份給完全新手的入門導讀</p>
+  <p class="meta">潘聖融（宜大 AI碩一）．內容全部來自我的 AI Agents LLM Wiki<br>操作：← → 鍵、空白鍵、點畫面左右兩側或滑動切換</p>
+  <footer class="cite">出處：<a href="../wiki/index.html">AI Agents LLM Wiki 首頁</a></footer>
+</section>
+
+<section class="slide" data-terms="Agent 定義|工具使用|ReAct 迴圈|工作流模式|多代理|風險與陷阱">
+  <p class="kicker">今天的路線</p>
+  <h2>看完這份簡報，你會知道……</h2>
+  <ul>
+    <li>聊天機器人和 agent 差在哪？（Agent 定義）</li>
+    <li>agent 由哪些零件組成？怎麼「動手」？（工具使用、記憶、規劃）</li>
+    <li>agent 一步一步做事的經典寫法：ReAct 迴圈</li>
+    <li>五種常見的工作流模式，以及什麼時候需要多代理</li>
+    <li>風險與陷阱：為什麼需要 guardrails 和人工把關</li>
+  </ul>
+  <p class="note">最後有小測驗，可以點開看答案。</p>
+  <footer class="cite">出處：<a href="../wiki/index.html">Wiki 首頁．建議閱讀順序</a></footer>
+</section>
+
+<section class="slide" data-terms="聊天機器人|跑腿的助理|情緒分類器|迴圈">
+  <p class="kicker">第一部分．聊天機器人 vs Agent</p>
+  <h2>客服 vs 跑腿的助理</h2>
+  <div class="grid2">
+    <div class="card"><h3>💬 聊天機器人</h3><p>你問一句、它答一句，事情還是你自己去做。<br>單輪 LLM、情緒分類器也一樣：<b>沒有用 LLM 控制流程</b>，所以不算 agent。</p></div>
+    <div class="card"><h3>🧭 Agent</h3><p>你交代目標，它自己決定要查什麼、用什麼工具、做幾步，在<b>迴圈</b>裡一步步做完，做完或卡住再回報。</p></div>
+  </div>
+  <p class="note">一句話：agent 就是讓 LLM 自己掌控流程、會用工具、在迴圈裡把任務做完的系統。</p>
+  <footer class="cite">出處：<a href="../wiki/agent-definition.html">Agent 定義</a></footer>
+</section>
+
+<section class="slide" data-terms="workflow|agentic|預先寫好的程式路徑|最簡單的解法">
+  <p class="kicker">第一部分．聊天機器人 vs Agent</p>
+  <h2>關鍵問題：誰決定下一步？</h2>
+  <table>
+    <tr><th></th><th>Workflow（工作流）</th><th>Agent（代理）</th></tr>
+    <tr><td>誰決定路徑</td><td>開發者事先寫好的程式路徑</td><td>LLM 動態決定步驟和工具</td></tr>
+    <tr><td>優點</td><td>對定義清楚的任務，可預測、一致</td><td>適合步驟數量難以預測的開放式問題</td></tr>
+    <tr><td>代價</td><td>路徑要事先寫好</td><td>成本較高、錯誤可能累積</td></tr>
+  </table>
+  <p class="note">兩者合稱 <b>agentic 系統</b>。Anthropic 的建議：先找最簡單的解法，真的需要才加複雜度。</p>
+  <footer class="cite">出處：<a href="../wiki/agent-definition.html">Agent 定義</a><a href="../wiki/anthropic-building-effective-agents.html">來源｜Anthropic</a></footer>
+</section>
+
+<section class="slide" data-terms="模型|工具|指令|規劃|記憶|大腦">
+  <p class="kicker">第二部分．核心元件</p>
+  <h2>一個 agent 由什麼組成？</h2>
+  <div class="grid3">
+    <div class="card"><h3>🧠 模型</h3><p>LLM 是大腦，負責推理和決策。</p></div>
+    <div class="card"><h3>🛠️ 工具</h3><p>可以呼叫的外部函式或 API，讓 agent 能查資料、做事。</p></div>
+    <div class="card"><h3>📋 指令</h3><p>清楚的指示和 guardrails，告訴 agent 該怎麼做、不能做什麼。</p></div>
+  </div>
+  <p class="note">另一種說法（Lilian Weng）：LLM 大腦 ＋ <b>規劃</b> ＋ <b>記憶</b> ＋ <b>工具</b>。兩種說法都在講同一件事，只是切法不同。</p>
+  <footer class="cite">出處：<a href="../wiki/agent-definition.html">Agent 定義</a><a href="../wiki/openai-practical-guide.html">來源｜OpenAI 指南</a><a href="../wiki/weng-llm-powered-agents.html">來源｜Weng</a></footer>
+</section>
+
+<section class="slide" data-terms="Data|Action|Orchestration|Toolformer|ACI">
+  <p class="kicker">第二部分．核心元件</p>
+  <h2>工具：從房間伸出去的手</h2>
+  <p>LLM 像讀過很多書、但被關在房間裡的人：不知道今天的新聞，心算也可能出錯。工具補上這些缺口。</p>
+  <div class="grid3">
+    <div class="card"><h3>Data 取資訊</h3><p>查資料庫、讀 PDF、搜尋網頁</p></div>
+    <div class="card"><h3>Action 做事</h3><p>寄信、更新紀錄</p></div>
+    <div class="card"><h3>Orchestration</h3><p>把別的 agent 當成工具呼叫</p></div>
+  </div>
+  <p class="note"><b>Toolformer</b> 讓模型自己學會何時呼叫哪個 API；Anthropic 則提醒工具說明（ACI）要寫得像給新同事的文件。</p>
+  <footer class="cite">出處：<a href="../wiki/tool-use.html">工具使用</a><a href="../wiki/openai-practical-guide.html">來源｜OpenAI 指南</a><a href="../wiki/schick-toolformer.html">來源｜Toolformer</a></footer>
+</section>
+
+<section class="slide" data-terms="短期記憶|長期記憶|向量資料庫|任務拆解|自我反思|Reflexion">
+  <p class="kicker">第二部分．核心元件</p>
+  <h2>記憶與規劃</h2>
+  <div class="grid2">
+    <div class="card"><h3>📚 記憶</h3><p><b>短期記憶</b>：放得進 context window 的內容，像桌上攤開的筆記。<br><b>長期記憶</b>：存在外部向量資料庫，需要時再檢索回來，像書櫃裡的資料夾。</p></div>
+    <div class="card"><h3>🗺️ 規劃</h3><p><b>任務拆解</b>：把大任務拆成小步驟（例如 Chain of Thought）。<br><b>自我反思</b>：回頭檢討、修正做法（例如 ReAct、Reflexion）。</p></div>
+  </div>
+  <p class="note">常見誤會：LLM 不會自動記得上次聊過什麼，要靠系統把內容放回 context 或從長期記憶取回。</p>
+  <footer class="cite">出處：<a href="../wiki/memory.html">記憶</a><a href="../wiki/planning.html">規劃</a></footer>
+</section>
+
+<section class="slide" data-terms="Thought|Action|Observation|偵探">
+  <p class="kicker">第三部分．ReAct 迴圈</p>
+  <h2>ReAct：想 → 做 → 看，一直循環</h2>
+  <div class="loop">
+    <div class="step"><b>Thought</b><span>想：下一步該做什麼？</span></div><div class="arrow">→</div>
+    <div class="step"><b>Action</b><span>做：呼叫工具</span></div><div class="arrow">→</div>
+    <div class="step"><b>Observation</b><span>看：讀工具回傳的結果</span></div>
+  </div>
+  <p class="back">↺ 回到 Thought，直到任務完成</p>
+  <p>像偵探辦案：先推理該查什麼 → 去調監視器 → 看到結果 → 再推理下一步。ReAct ＝ Reasoning ＋ Acting。</p>
+  <footer class="cite">出處：<a href="../wiki/react-loop.html">ReAct 迴圈</a><a href="../wiki/yao-react.html">來源｜ReAct 論文</a></footer>
+</section>
+
+<section class="slide" data-terms="幻覺|HotpotQA|ALFWorld|WebShop|最大輪數">
+  <p class="kicker">第三部分．ReAct 迴圈</p>
+  <h2>為什麼有效？什麼時候停？</h2>
+  <div class="grid2">
+    <div class="card"><h3>✅ 為什麼有效</h3><p>推理幫助擬定和更新計畫；行動拿到外部真實資訊，減少<b>幻覺</b>。在 HotpotQA、Fever 上比純 chain-of-thought 更少幻覺；在 ALFWorld、WebShop 上，成功率比模仿學習和強化學習方法高出 34% 和 10%（絕對值）。</p></div>
+    <div class="card"><h3>🛑 什麼時候停</h3><p>agent 的「run」就是一個 while 迴圈，停在：呼叫最終輸出工具、模型不再呼叫工具、發生錯誤，或達到<b>最大輪數</b>。</p></div>
+  </div>
+  <p class="note">迴圈不會自己停，一定要設停止條件，不然可能一直燒錢。</p>
+  <footer class="cite">出處：<a href="../wiki/react-loop.html">ReAct 迴圈</a><a href="../wiki/yao-react.html">來源｜ReAct 論文</a></footer>
+</section>
+
+<section class="slide" data-terms="Prompt chaining|Routing|Parallelization|Orchestrator-workers|Evaluator-optimizer">
+  <p class="kicker">第四部分．工作流模式</p>
+  <h2>五種常見的工作流模式</h2>
+  <table>
+    <tr><th>模式</th><th>一句話</th><th>例子</th></tr>
+    <tr><td>Prompt chaining 串接</td><td>上一步的輸出是下一步的輸入，中間可加檢查關卡</td><td>寫大綱 → 檢查 → 寫全文</td></tr>
+    <tr><td>Routing 分流</td><td>先分類，再送到專門流程</td><td>客服分一般／退款／技術</td></tr>
+    <tr><td>Parallelization 平行</td><td>同時跑多個 LLM 再彙整（切塊或投票）</td><td>一個回答、一個做內容把關</td></tr>
+    <tr><td>Orchestrator-workers</td><td>中央 LLM 動態拆任務給 worker</td><td>改動檔案數量不固定的程式任務</td></tr>
+    <tr><td>Evaluator-optimizer</td><td>一個產生、一個評估，不合格就重做</td><td>文學翻譯</td></tr>
+  </table>
+  <footer class="cite">出處：<a href="../wiki/workflow-patterns.html">工作流模式</a><a href="../wiki/langgraph-workflows-agents.html">來源｜LangGraph</a></footer>
+</section>
+
+<section class="slide" data-terms="Manager|Decentralized|handoff|15|10">
+  <p class="kicker">第五部分．多代理</p>
+  <h2>多代理：先單、後多</h2>
+  <div class="grid2">
+    <div class="card"><h3>👔 Manager 模式</h3><p>一個中央 agent 把其他專門 agent 當工具呼叫，由它統一跟使用者互動。例：翻譯請求分給西、法、義文 agent。</p></div>
+    <div class="card"><h3>🤝 Decentralized 模式</h3><p>agent 之間平起平坐，用 <b>handoff</b> 把控制權交出去。例：分流 agent 把訂單問題交給訂單管理 agent。</p></div>
+  </div>
+  <p class="note">什麼時候該拆？提示裡 if-else 太多，或工具彼此太像。有些系統能管好超過 15 個清楚的工具，有些在不到 10 個重疊工具時就出問題。</p>
+  <footer class="cite">出處：<a href="../wiki/multi-agent.html">多代理</a><a href="../wiki/openai-practical-guide.html">來源｜OpenAI 指南</a></footer>
+</section>
+
+<section class="slide" data-terms="compounding errors|guardrails|prompt injection|人工介入|分層">
+  <p class="kicker">第六部分．風險與陷阱</p>
+  <h2>把鑰匙交給新司機之前</h2>
+  <ul>
+    <li><b>錯誤累積</b>（compounding errors）：自主＝成本更高，一步錯可能步步錯 → 沙盒測試</li>
+    <li><b>被攻擊</b>：jailbreak、prompt injection 讓 agent 洩漏系統提示或亂做事</li>
+    <li><b>分層 guardrails</b>：相關性、安全分類、PII 過濾、內容審核、工具風險分級、黑名單／正規表達式</li>
+    <li><b>人工介入</b>：失敗超過門檻，或取消訂單、大額退款、付款這類高風險動作</li>
+    <li><b>模型限制</b>：context 長度有限、長期規劃困難、輸出格式不一定可靠</li>
+  </ul>
+  <footer class="cite">出處：<a href="../wiki/risks.html">風險與陷阱</a><a href="../wiki/openai-practical-guide.html">來源｜OpenAI 指南</a></footer>
+</section>
+
+<section class="slide" data-terms="迴圈|工具|ReAct|guardrails|單一 agent">
+  <p class="kicker">總結</p>
+  <h2>五句話帶走今天的內容</h2>
+  <ul>
+    <li>Agent ＝ LLM 自己決定下一步，用工具在迴圈裡把任務做完。</li>
+    <li>核心零件：模型、工具、指令（也可以說是大腦＋規劃＋記憶＋工具）。</li>
+    <li>ReAct：Thought → Action → Observation，記得設停止條件。</li>
+    <li>流程固定就用 workflow；先把單一 agent 做好，再考慮多代理。</li>
+    <li>自主有代價：分層 guardrails ＋ 高風險動作交給人。</li>
+  </ul>
+  <footer class="cite">出處：<a href="../wiki/agent-definition.html">Agent 定義</a><a href="../wiki/react-loop.html">ReAct 迴圈</a><a href="../wiki/multi-agent.html">多代理</a><a href="../wiki/risks.html">風險與陷阱</a></footer>
+</section>
+
+<section class="slide" data-terms="情緒分類器|Observation|Routing|Manager|人工介入">
+  <p class="kicker">小測驗（點題目看答案）</p>
+  <h2>考考你</h2>
+  <details><summary>Q1．一個只會判斷評論是正面還是負面的情緒分類器，算 agent 嗎？</summary><p>不算。它沒有用 LLM 控制流程執行，也不會用工具採取行動。</p></details>
+  <details><summary>Q2．ReAct 迴圈中，讀取工具回傳結果的那一步叫什麼？</summary><p>Observation（看）。順序是 Thought → Action → Observation。</p></details>
+  <details><summary>Q3．客服系統先判斷問題是「退款」還是「技術支援」，再交給不同流程，這是哪種模式？</summary><p>Routing（分流）。</p></details>
+  <details><summary>Q4．由一個中央 agent 把其他 agent 當工具呼叫，是哪一種多代理模式？</summary><p>Manager 模式。另一種是 agent 之間互相 handoff 的 Decentralized 模式。</p></details>
+  <details><summary>Q5．agent 要幫使用者付款之前，最好怎麼做？</summary><p>觸發人工介入：付款屬於高風險、不可逆的動作，要讓人確認。</p></details>
+  <footer class="cite">出處：<a href="../wiki/agent-definition.html">Agent 定義</a><a href="../wiki/react-loop.html">ReAct 迴圈</a><a href="../wiki/workflow-patterns.html">工作流模式</a><a href="../wiki/multi-agent.html">多代理</a><a href="../wiki/risks.html">風險與陷阱</a></footer>
+</section>
+
+<section class="slide" data-terms="Anthropic|Weng|ReAct|Toolformer|OpenAI|LangGraph">
+  <p class="kicker">參考資料</p>
+  <h2>這份簡報背後的 6 份來源</h2>
+  <ul>
+    <li>Anthropic（2024）〈Building effective agents〉</li>
+    <li>Lilian Weng（2023）〈LLM Powered Autonomous Agents〉</li>
+    <li>Yao et al.（2022）ReAct: Synergizing Reasoning and Acting in Language Models</li>
+    <li>Schick et al.（2023）Toolformer: Language Models Can Teach Themselves to Use Tools</li>
+    <li>OpenAI（2025）〈A practical guide to building agents〉</li>
+    <li>LangChain〈Workflows and agents〉LangGraph 官方文件</li>
+  </ul>
+  <p class="note">每份來源都有一頁 wiki 摘要，原始網址和查證紀錄都在裡面；製作流程與檢查紀錄見 <a href="../process.html">流程說明</a>。</p>
+  <footer class="cite">出處：<a href="../wiki/index.html">Wiki 首頁．來源列表</a></footer>
+</section>
+
+</main>
+<nav class="hud" aria-label="投影片導覽">
+  <button id="prev" aria-label="上一張">‹</button>
+  <span class="count" id="count">1 / 1</span>
+  <button id="next" aria-label="下一張">›</button>
+</nav>
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var i=0, bar=document.getElementById('bar'), count=document.getElementById('count');
+  var prev=document.getElementById('prev'), next=document.getElementById('next');
+  function show(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach(function(s,k){s.classList.toggle('active',k===i);});
+    bar.style.width=((i+1)/slides.length*100)+'%';
+    count.textContent=(i+1)+' / '+slides.length;
+    prev.disabled=i===0; next.disabled=i===slides.length-1;
+    if(location.hash!=='#'+(i+1)) history.replaceState(null,'','#'+(i+1));
+  }
+  prev.onclick=function(){show(i-1);}; next.onclick=function(){show(i+1);};
+  document.addEventListener('keydown',function(e){
+    if(['ArrowRight','PageDown',' ','Enter'].indexOf(e.key)>=0){e.preventDefault();show(i+1);}
+    else if(['ArrowLeft','PageUp','Backspace'].indexOf(e.key)>=0){e.preventDefault();show(i-1);}
+    else if(e.key==='Home'){show(0);} else if(e.key==='End'){show(slides.length-1);}
+  });
+  document.getElementById('deck').addEventListener('click',function(e){
+    if(e.target.closest('a,button,details,summary,table')) return;
+    if(window.getSelection && String(window.getSelection())) return;
+    show(e.clientX>window.innerWidth/3 ? i+1 : i-1);
+  });
+  var sx=null, sy=null;
+  document.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+  document.addEventListener('touchend',function(e){
+    if(sx===null) return; var dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)) show(dx<0?i+1:i-1); sx=null;
+  });
+  window.addEventListener('hashchange',function(){var n=parseInt(location.hash.slice(1),10); if(n) show(n-1);});
+  var start=parseInt(location.hash.slice(1),10); show(start?start-1:0);
+})();
+</script>
+</body>
+</html>

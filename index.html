@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>首頁｜AI Agents LLM Wiki</title><link rel="stylesheet" href="assets/style.css"></head>
+<body><nav class="top"><a class="brand" href="index.html">AI Agents LLM Wiki</a><a href="wiki/index.html">Wiki</a><a href="slides/index.html">教學簡報</a><a href="process.html">流程與檢查紀錄</a><a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents">GitHub</a></nav><main>
+<h1>AI Agents LLM Wiki ＋ 教學簡報</h1>
+<p>這是 TAICA 生成式 AI 課程的作業：先用「先討論、後生成」建立一份 AI Agents 主題的 LLM Wiki（ingest 6 份資料），再讓 AI 只用這份 Wiki 當知識來源，產生一份給新手看的教學 HTML 簡報。整個過程有自動檢查和執行紀錄。</p>
+<div class="cards">
+<a class="card" href="slides/index.html"><b>🎞️ 教學簡報</b>「AI Agents 是什麼？」15 張，每張都標出處</a>
+<a class="card" href="wiki/index.html"><b>📚 LLM Wiki</b>6 篇來源摘要＋8 個概念頁</a>
+<a class="card" href="process.html"><b>🔁 流程與檢查紀錄</b>loop / graph 設計、實際執行結果、反思</a>
+</div>
+<h2>專案結構</h2>
+<ul>
+<li><code>raw/</code>：來源 metadata（sources.json）和摘錄</li>
+<li><code>wiki/</code>：Wiki 頁（Markdown 為主，HTML 由 build.py 產生）</li>
+<li><code>slides/</code>：簡報大綱 outline.md 與 index.html</li>
+<li><code>checks/</code>：check.py 自動檢查與每次執行的 log</li>
+<li><code>AGENTS.md</code>：給 AI 的寫作規則</li>
+</ul>
+</main><footer class="site">潘聖融（宜大 AI碩一）．內容依 <a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents/blob/main/AGENTS.md">AGENTS.md</a> 規則撰寫，由 build.py 從 Markdown 產生。</footer></body></html>

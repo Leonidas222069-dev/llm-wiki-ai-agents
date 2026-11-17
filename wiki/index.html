@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Agents LLM Wiki｜AI Agents LLM Wiki</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><nav class="top"><a class="brand" href="../index.html">AI Agents LLM Wiki</a><a href="../wiki/index.html">Wiki</a><a href="../slides/index.html">教學簡報</a><a href="../process.html">流程與檢查紀錄</a><a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents">GitHub</a></nav><main>
+<h1>AI Agents LLM Wiki</h1><div class="meta"><span class="tag">Wiki 首頁</span>更新：2026-11-17<br>相關頁：<a href="agent-definition.html">Agent 定義</a>、<a href="react-loop.html">ReAct 迴圈</a>、<a href="workflow-patterns.html">工作流模式</a><br><a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents/blob/main/wiki/index.md">看 Markdown 原檔</a></div>
+<p>這是一份用「先討論、後生成」方式建立的 AI Agents 知識庫：先在對話裡決定主題、來源和頁面結構，再讓 AI 依照 <a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents/blob/main/AGENTS.html">AGENTS.md 規則</a> 寫成 wiki，最後拿這份 wiki 產生<a href="../slides/index.html">教學簡報</a>。</p>
+<h2>建議閱讀順序</h2>
+<ol>
+<li><a href="agent-definition.html">Agent 定義</a>：聊天機器人和 agent 差在哪？</li>
+<li><a href="tool-use.html">工具使用</a>：agent 怎麼「動手」。</li>
+<li><a href="react-loop.html">ReAct 迴圈</a>：想 → 做 → 看。</li>
+<li><a href="planning.html">規劃</a>：拆任務、自我反思。</li>
+<li><a href="memory.html">記憶</a>：短期 vs 長期。</li>
+<li><a href="workflow-patterns.html">工作流模式</a>：五種常見模式。</li>
+<li><a href="multi-agent.html">多代理</a>：什麼時候該拆成很多個 agent。</li>
+<li><a href="risks.html">風險與陷阱</a>：guardrails 與人工把關。</li>
+</ol>
+<h2>來源摘要頁（6 篇）</h2>
+<table>
+<thead>
+<tr>
+<th>來源</th>
+<th>年份</th>
+<th>主要餵給哪些概念頁</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="anthropic-building-effective-agents.html">Anthropic〈Building effective agents〉</a></td>
+<td>2024</td>
+<td>Agent 定義、工作流模式、風險</td>
+</tr>
+<tr>
+<td><a href="weng-llm-powered-agents.html">Lilian Weng〈LLM Powered Autonomous Agents〉</a></td>
+<td>2023</td>
+<td>規劃、記憶、工具、風險</td>
+</tr>
+<tr>
+<td><a href="yao-react.html">ReAct（Yao et al.）</a></td>
+<td>2022</td>
+<td>ReAct 迴圈、規劃</td>
+</tr>
+<tr>
+<td><a href="schick-toolformer.html">Toolformer（Schick et al.）</a></td>
+<td>2023</td>
+<td>工具使用</td>
+</tr>
+<tr>
+<td><a href="openai-practical-guide.html">OpenAI〈A practical guide to building agents〉</a></td>
+<td>2025</td>
+<td>Agent 定義、多代理、風險、工具</td>
+</tr>
+<tr>
+<td><a href="langgraph-workflows-agents.html">LangGraph〈Workflows and agents〉</a></td>
+<td>待確認</td>
+<td>工作流模式、Agent 定義</td>
+</tr>
+</tbody>
+</table>
+<h2>這份 wiki 怎麼做出來的</h2>
+<p>完整流程圖、檢查紀錄和反思在 <a href="../process.html">流程說明</a>。</p>
+</main><footer class="site">潘聖融（宜大 AI碩一）．內容依 <a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents/blob/main/AGENTS.md">AGENTS.md</a> 規則撰寫，由 build.py 從 Markdown 產生。</footer></body></html>

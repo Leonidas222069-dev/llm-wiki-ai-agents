@@ -1,0 +1,102 @@
+# 流程說明：loop / graph 設計、執行紀錄與反思
+
+這頁說明這份 AI Agents LLM Wiki 和教學簡報是怎麼做出來的：資料怎麼取得、怎麼整理成 wiki、怎麼檢查，再怎麼變成簡報。下面的紀錄全部來自 2026-11-17 實際跑一次的結果，每次檢查的原始輸出都存在 [checks/logs/](https://github.com/Leonidas222069-dev/llm-wiki-ai-agents/tree/main/checks/logs)。
+
+## 1. 流程圖（修改後的版本）
+
+```mermaid
+flowchart TD
+    D0([先討論：主題、6 份來源、頁面結構<br>使用者同意]) --> A[取得資料<br>curl 網頁 / PDF 轉文字]
+    A --> CA{檢查 fetch<br>HTTP 200？轉址殘頁？<br>字數夠？錨點句吻合？}
+    CA -- FAIL：換網址或重新轉檔 --> A
+    CA -- 通過 --> B[寫 Wiki<br>6 篇來源頁 + 8 個概念頁]
+    B --> CB{檢查 wiki<br>front matter、內部連結<br>引文逐字比對、數字比對}
+    CB -- FAIL：改頁面 --> B
+    CB -- 抓錯資料 --> A
+    CB -- 通過 --> Q[查詢 Wiki<br>依簡報章節找對應頁]
+    Q --> O[整理重點<br>slides/outline.md<br>每句標 wiki 頁 id]
+    O --> CO{檢查 outline<br>每句都逐字出自 wiki？}
+    CO -- FAIL：回去查 wiki 或補 wiki --> Q
+    CO -- 通過 --> S[產生簡報<br>slides/index.html]
+    S --> CS{再檢查 slides<br>出處 footer、關鍵詞、數字<br>footer 涵蓋 outline 的頁}
+    CS -- FAIL：重新生成該張 --> S
+    CS -- 通過 --> R[人工複查<br>逐張對照 wiki]
+    R -- 發現 wiki 沒寫的說法 --> O
+    R -- 通過 --> P[build.py 產生 HTML<br>檢查 site 內部連結 → 發布]
+```
+
+（圖中的「檢查 outline」節點是執行過程中才加上的，原因見第 4、5 節。）
+
+## 2. 每個節點在做什麼
+
+| 節點 | 輸入 → 輸出 | 誰做 |
+|---|---|---|
+| 先討論 | 作業說明 → 主題、來源清單、頁面結構 | 我和 AI 在對話中討論，我同意後才開始 |
+| 取得資料 | 6 個網址 → `raw/_full/` 全文、`raw/sources.json` metadata | curl、pdftotext、BeautifulSoup |
+| 寫 Wiki | 全文 → `wiki/*.md`（照 [AGENTS.md](https://github.com/Leonidas222069-dev/llm-wiki-ai-agents/blob/main/AGENTS.md) 的段落和 front matter） | AI 撰寫 |
+| 查詢 Wiki | 簡報章節 → 對應的 wiki 頁 | AI 依 index 的閱讀順序查 |
+| 整理重點 | wiki 頁 → `slides/outline.md`（每句都標出處頁 id） | AI 撰寫 |
+| 產生簡報 | outline → `slides/index.html`（每張有出處 footer） | AI 撰寫 |
+| 檢查 | 各節點產出 → PASS / FAIL 清單 | `checks/check.py --stage fetch / wiki / outline / slides / site` |
+| 人工複查 | 簡報 ↔ wiki | 逐張對照 |
+
+## 3. 哪些步驟會重複？哪裡要檢查或重新生成？為什麼這樣設計？
+
+**會重複的迴圈：**
+
+1. **取得資料 ⇄ 檢查 fetch**：抓到的東西不對（轉址殘頁、PDF 轉檔錯亂）就重抓或重新轉檔，直到通過。
+2. **寫 Wiki ⇄ 檢查 wiki**：引文找不到、數字對不上、連結壞掉，就改那一頁再檢查。如果發現是資料本身抓錯，會一路退回「取得資料」。
+3. **整理重點 ⇄ 檢查 outline**：大綱裡的句子在 wiki 找不到，就回去查 wiki；wiki 真的沒寫，就先補 wiki（而且補的內容也要有來源）。
+4. **產生簡報 ⇄ 檢查 slides ⇄ 人工複查**：哪一張沒過，就只重新生成那一張。
+
+**為什麼這樣設計：**
+
+- **每個產出後面都接一個檢查閘門**，跟 Anthropic 說的 prompt chaining 加 gate、以及 evaluator-optimizer「不合格就帶回饋重做」是同一個想法（見 wiki 的 [工作流模式](wiki/workflow-patterns.md)）。
+- **錯誤越早抓越便宜**：資料抓錯，後面的 wiki 和簡報全部會跟著錯。
+- **能自動檢查的就交給程式**（HTTP 狀態、逐字比對、數字比對、連結），程式比不了的語意，就交給人工複查。
+- **流程用固定的 graph，不用自主 agent**：這份作業的步驟是固定的，照 wiki 裡「能簡單就簡單」的建議，用 workflow 就夠了。
+
+## 4. 一次實際執行的紀錄（2026-11-17，時間為 UTC+8）
+
+| 時間 | 節點 | 結果 | 發現的問題 → 怎麼修 |
+|---|---|---|---|
+| 09:38 | 取得資料 | 9 個網址都回 HTTP 200 | 只看狀態碼會以為全部成功。人工打開檔案才發現：① LangGraph 舊網址回的是 **570 bytes 的 meta-refresh 轉址殘頁**，不是文件內容（證據：`raw/evidence/langgraph-old-url-stub.html`），改抓新網址的 `.md` 版本；② Anthropic 的 /engineering/ 網址會轉到 /research/，改記轉址後的正式網址。→ 在 fetch 檢查加上「轉址殘頁偵測」和「全文字數」。 |
+| 09:41 | 檢查 fetch #1 | 0 FAIL、6 WARN | WARN 是還沒寫摘錄檔，屬於預期中的狀態（log：`20261117-094121-fetch.txt`） |
+| 09:44 | 檢查 wiki #1 | **6 FAIL** | ① Toolformer 兩句引文在全文找不到：`pdftotext -layout` 把雙欄 PDF 的摘要和圖說交錯在一起，改用預設模式重新轉檔；② 重新轉檔後，第二句還是找不到，查下去才發現 **arXiv 摘要頁寫 two different search engines，PDF 摘要卻寫 a search engine**，正文列的是五種工具。wiki 原本照摘要頁寫「兩種搜尋引擎」，這是**內容錯誤**，改成依 PDF 正文列出五種工具，並註明兩邊不一致；③ Anthropic 一句引文失敗：網頁轉文字時在逗號前多一個空白，修正比對函式；④ 數字 12、19（日期 2024-12-19）、200（HTTP 狀態碼）被誤判成數據，修正數字抽取規則。（log：`20261117-094411-wiki.txt`） |
+| 09:44 | 檢查 fetch #2、wiki #2 | 0 FAIL | fetch 檢查新增「錨點句」：從來源頁面挑一句話，確認全文裡逐字找得到 |
+| 09:45 | 回歸測試 | 2 FAIL（符合預期） | 拿**第一次抓到的錯誤檔案**跑新的 fetch 檢查：轉址殘頁和欄位交錯都被抓出來。代表這兩種錯誤以後在「取得資料」就會被擋下，不會等到寫完 wiki 才發現（log：`20261117-094503-fetch-regression-on-first-attempt.txt`） |
+| 09:46 | 檢查 slides #1 | **4 FAIL** | ① 標題頁寫了「15 分鐘導讀」，wiki 裡根本沒有這個數字，是生成時自己加的，已刪掉；② 另外 3 個 FAIL（10、100、50）是檢查程式的 bug：最後一張投影片把 `<script>` 程式碼也算進去，修正解析器。（log：`20261117-094642-slides.txt`） |
+| 09:46 | 檢查 slides #2 ＋ 人工複查 | 自動檢查 0 FAIL，但人工找到 2 個問題 | ① 第 4 張表格寫「彈性大」「遇到沒想過的情況就卡住」，關鍵詞檢查通過了，但 **wiki 裡沒有這兩個說法**。回到 Anthropic 原文，在 [Agent 定義](wiki/agent-definition.md) 補上 workflow 和 agent 各適合什麼（有原文根據），投影片改成照 wiki 寫；② 第 6 張的工具例子其實出自 OpenAI 指南頁，但 footer 沒標，已補上。→ **新增「整理重點」的 outline 檢查**，在產生 HTML 前就要求每句都逐字出自 wiki。 |
+| 09:47 | 檢查 outline #1、slides #3 | 0 FAIL | 這一輪的 outline 是在簡報做完之後才補寫的；從下一輪開始，順序就是先過 outline 檢查，再產生簡報（log：`20261117-094730-*.txt`） |
+| 09:48 | 檢查 site、all | 0 FAIL | 292 個內部連結全部存在（log：`20261117-094807-site.txt`、`20261117-094817-all.txt`） |
+
+發布後的最終檢查結果，附在第 6 節。
+
+**問題統計：**
+
+| 問題出在哪 | 次數 | 例子 |
+|---|---|---|
+| 取得資料／轉文字 | 4 | 轉址殘頁、網址轉址、PDF 欄位交錯、摘要頁和 PDF 版本不一致 |
+| 寫 Wiki | 1 | Toolformer 工具清單寫錯（根源是上一列的版本不一致） |
+| 產生簡報 | 3 | 自己加的「15 分鐘」、表格寫了 wiki 沒有的說法、footer 漏標出處 |
+| 檢查程式本身 | 3 | 標點空白、日期和狀態碼誤判、`<script>` 被算進投影片 |
+
+## 5. 反思
+
+**哪一個節點最常出錯？**
+「取得資料」最常出錯（4 次），而且最危險，因為它的錯誤**看起來像成功**：LangGraph 舊網址回 HTTP 200，Toolformer 的 PDF 也轉得出文字，只看狀態碼完全不會發現。這些錯誤一路流到「寫 Wiki」才爆出來，其中一個還真的讓 wiki 寫錯了（工具清單）。第二名是「產生簡報」（3 次），問題都是 AI 會順手補上聽起來合理、但 wiki 沒寫的內容。
+
+**發現問題後，把檢查往前移到哪一步？**
+1. 引文比對失敗的根本原因是轉檔，所以把「轉址殘頁偵測」和「錨點句比對」**從 wiki 檢查往前移到 fetch 檢查**，回歸測試證明它在取得資料當下就能擋住。
+2. 簡報出現 wiki 沒有的說法，原本只能靠產生 HTML 之後的關鍵詞檢查和人工複查才發現，所以**往前移到「整理重點」**：先寫 outline.md，每句都要標 wiki 頁 id，而且必須逐字出現在該頁，通過了才產生 HTML。
+
+**有沒有因此修改 workflow / graph？為什麼？**
+有，改了兩個地方：
+- **多一個節點**：在「整理重點」後面加上「檢查 outline」閘門，還多了一條「人工複查 → 回到整理重點」的回頭路。原本的設計是「產生簡報 → 再檢查」，但事後檢查只能說「這張有問題」，沒辦法保證每句話有根據；先檢查大綱，生成時就有明確的依據。
+- **fetch 檢查變嚴格**：從「HTTP 200」變成「200＋不是轉址頁＋字數夠＋錨點句吻合」，因為這次證明了 200 不等於拿到正確內容。
+
+另外也學到，**檢查程式本身也會出錯**（3 次誤判）。誤判太多，人就會開始忽略 FAIL，所以每次 FAIL 都先判斷是內容錯還是檢查錯，再決定修哪一邊。關鍵詞檢查也有限制：它只能證明這個詞出現在 wiki，證明不了意思一樣，所以人工複查還是不能省。
+
+## 6. 發布後最終檢查
+
+（發布後補上）

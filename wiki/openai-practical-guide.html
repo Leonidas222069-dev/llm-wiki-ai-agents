@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>來源｜OpenAI〈A practical guide to building agents〉｜AI Agents LLM Wiki</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><nav class="top"><a class="brand" href="../index.html">AI Agents LLM Wiki</a><a href="../wiki/index.html">Wiki</a><a href="../slides/index.html">教學簡報</a><a href="../process.html">流程與檢查紀錄</a><a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents">GitHub</a></nav><main>
+<h1>來源｜OpenAI〈A practical guide to building agents〉</h1><div class="meta"><span class="tag">來源摘要頁</span>更新：2026-11-17<br>相關頁：<a href="agent-definition.html">Agent 定義</a>、<a href="multi-agent.html">多代理</a>、<a href="risks.html">風險與陷阱</a>、<a href="tool-use.html">工具使用</a><br><a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents/blob/main/wiki/openai-practical-guide.md">看 Markdown 原檔</a></div>
+<h2>基本資料</h2>
+<ul>
+<li>標題：A practical guide to building agents</li>
+<li>作者：OpenAI</li>
+<li>年份：2025（PDF 內文沒寫日期，依 PDF metadata 建立日 2025-04-07；精確發布日待確認）</li>
+<li>類型：PDF 指南（34 頁）</li>
+<li>正式網址：https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf</li>
+</ul>
+<h2>一句話摘要</h2>
+<p>寫給產品和工程團隊的實務指南：什麼是 agent、什麼時候值得做、agent 的三個核心元件（模型、工具、指令）、單代理與多代理的編排方式，以及 guardrails 和人工介入。</p>
+<h2>重點整理</h2>
+<ol>
+<li><strong>定義</strong>：agent 是能「代替你、獨立完成任務」的系統。單純的聊天機器人、單輪 LLM、情緒分類器<strong>不算</strong> agent，因為它們沒有用 LLM 來控制流程執行。</li>
+<li><strong>什麼時候值得做</strong>：複雜判斷（例如退款審核）、規則多到難以維護、需要大量處理非結構化資料的流程。</li>
+<li><strong>三個核心元件</strong>：Model（負責推理和決策的 LLM）、Tools（可以呼叫的外部函式或 API）、Instructions（明確的指示和 guardrails）。</li>
+<li><strong>工具三類</strong>：Data（取資料，例如查資料庫、讀 PDF、搜尋網頁）、Action（做事，例如寄信、更新紀錄）、Orchestration（agent 本身也能當別的 agent 的工具）。</li>
+<li><strong>「run」就是一個迴圈</strong>：一直跑直到遇到結束條件，例如呼叫了最終輸出工具、模型回覆時沒有呼叫工具、發生錯誤，或達到最大輪數。</li>
+<li><strong>先把單一 agent 做到極致</strong>，真的需要時才拆成多代理。拆分訊號：提示裡 if-else 太多、工具太多或彼此太像。文中提到有些系統能管好超過 15 個定義清楚的工具，有些則在不到 10 個重疊工具時就出錯。</li>
+<li><strong>多代理兩種模式</strong>：Manager（一個管理者 agent 把其他 agent 當工具呼叫）、Decentralized（agent 之間互相 handoff 交接）。</li>
+<li><strong>Guardrails 要分層</strong>：相關性分類、安全分類（擋 jailbreak、prompt injection）、PII 過濾、內容審核、工具風險分級、規則式防護（黑名單、正規表達式）等。</li>
+<li><strong>人工介入</strong>兩個時機：失敗次數超過門檻、要做高風險動作（例如取消訂單、大額退款、付款）。</li>
+</ol>
+<h2>原文摘錄</h2>
+<blockquote>
+<p>"Agents are systems that independently accomplish tasks on your behalf."
+"Our general recommendation is to maximize a single agent's capabilities first."
+"Think of guardrails as a layered defense mechanism."</p>
+</blockquote>
+<h2>跟其他頁的關係</h2>
+<ul>
+<li>定義和「什麼不算 agent」放在 <a href="agent-definition.html">Agent 定義</a>。</li>
+<li>Manager／Decentralized 放在 <a href="multi-agent.html">多代理</a>。</li>
+<li>Guardrails 和人工介入放在 <a href="risks.html">風險與陷阱</a>。</li>
+<li>工具三類放在 <a href="tool-use.html">工具使用</a>。</li>
+</ul>
+</main><footer class="site">潘聖融（宜大 AI碩一）．內容依 <a href="https://github.com/Leonidas222069-dev/llm-wiki-ai-agents/blob/main/AGENTS.md">AGENTS.md</a> 規則撰寫，由 build.py 從 Markdown 產生。</footer></body></html>
